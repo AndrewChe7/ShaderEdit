@@ -16,6 +16,10 @@
 				float: left;
 				width: 50%;
 			}
+			.Editor {
+				width: 100%;
+				height: 100%;
+			}
 			#WebGL-output, #Options {
 				float: right;
 				width: 50%;
@@ -31,7 +35,20 @@
 	<body bgcolor="#000">
 		
 	<div id="Editor">
+		<div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s6"><a class="active" href="#FragEditor">Fragmental</a></li>
+        <li class="tab col s6"><a href="#VertexEditor">Vertex</a></li>
+      </ul>
+    </div>
+		<div class="Editor" id="FragEditor">
+		</div>
+		<div class="Editor" id="VertexEditor">
+		</div>
 	</div>
+
+
+
 	<div id="WebGL-output">
 	</div>
 	<div id="Options">
@@ -54,10 +71,15 @@
 
 		<!-- Main scripts -->
 		<script>
-				var editor = ace.edit("Editor");
-				editor.setTheme("ace/theme/monokai");
+				var fragEditor = ace.edit("FragEditor");
+				fragEditor.setTheme("ace/theme/monokai");
 				var GLSLMode = ace.require("ace/mode/glsl").Mode;
-				editor.session.setMode(new GLSLMode());
+				fragEditor.session.setMode(new GLSLMode());
+				var vertexEditor = ace.edit("VertexEditor");
+				vertexEditor.setTheme("ace/theme/monokai");
+				vertexEditor.session.setMode(new GLSLMode());
+
+
 		</script>
 		<script type="text/javascript" src="render.js"></script>
 		<script type="text/javascript" src="main.js"></script>

@@ -1,7 +1,12 @@
 var camera, scene, renderer;
 var geometry, material, mesh;
-var shader = "void main() {gl_FragColor = vec4(1.0,1.0,1.0,1.0);}";
-var uniforms = {};
+var vertexShader = "uniform float time; uniform vec2 resolution;void main()	{gl_Position = vec4( position, 1.0 );}"
+var fragShader = "uniform float time;uniform vec2 resolution;void main()	{float x = mod(time + gl_FragCoord.x, 20.) < 10. ? 1. : 0.;float y = mod(time + gl_FragCoord.y, 20.) < 10. ? 1. : 0.;gl_FragColor = vec4(vec3(min(x, y)), 1.);}";
+
+uniforms = {
+	time: { type: "f", value: 1.0 },
+	resolution: { type: "v2", value: new THREE.Vector2() }
+};
 var geometry = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
 var isAnimated = true;
 
@@ -9,13 +14,14 @@ var isAnimated = true;
 function init() {
 
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
-	uniforms.resolution = {type:'v2',value:new THREE.Vector2(window.innerWidth/2,window.innerHeight/2)};
+
 	camera.position.z = 1;
 	scene = new THREE.Scene();
 
 	material = new THREE.ShaderMaterial({
 		uniforms : uniforms,
-		fragmentShader : shader
+		vertexShader : vertexShader,
+		fragmentShader : fragShader
 	});
 	
 	mesh = new THREE.Mesh( geometry, material );
@@ -31,7 +37,7 @@ function init() {
 
 function animate() {
 	requestAnimationFrame( animate );
- 	if (isAnimated) {
+	if (isAnimated) {
 		mesh.rotation.x += 0.005;
 		mesh.rotation.y += 0.003;
 	} else {
@@ -53,8 +59,8 @@ $( window ).resize(function() {
 });
 
 $("#compileButton").click(function () {
-	var editorCode = editor.getValue();
-	shader = editorCode;
+	var editorCode = fragEditor.getValue();
+	fragShader = editorCode;
 	init ();
 });
 
