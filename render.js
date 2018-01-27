@@ -50,6 +50,10 @@ function animate() {
 }
 
 $(document).ready(function () {
+
+	vertexEditor.setValue("uniform float time;\nuniform vec2 resolution;\nvoid main()	{\n\tgl_Position = vec4( position, 1.0 );\n}", 1);
+	fragEditor.setValue("uniform float time;\nuniform vec2 resolution;\nvoid main()	{\n\tfloat x = mod(time + gl_FragCoord.x, 20.) < 10. ? 1. : 0.;\n\tfloat y = mod(time + gl_FragCoord.y, 20.) < 10. ? 1. : 0.;\n\tgl_FragColor = vec4(vec3(min(x, y)), 1.);\n}", 1);
+
 	init();
 	animate();
 });
@@ -61,6 +65,9 @@ $( window ).resize(function() {
 $("#compileButton").click(function () {
 	var editorCode = fragEditor.getValue();
 	fragShader = editorCode;
+
+	editorCode = vertexEditor.getValue();
+	vertexShader = editorCode;
 	init ();
 });
 
