@@ -35,7 +35,11 @@
 	<div id="WebGL-output">
 	</div>
 	<div id="Options">
-		<button class="btn waves-effect waves-light" type="submit" name="action">Compile</button>
+		<button class="btn waves-effect waves-light" id="boxButton">Box</button>
+		<button class="btn waves-effect waves-light" id="planeButton">Plane</button>
+		<button class="btn waves-effect waves-light" id="sphereButton">Sphere</button>
+		<br/>
+		<button class="btn waves-effect waves-light" id="compileButton">Compile</button>
 	</div>
 
 
@@ -47,21 +51,17 @@
 		<script type="text/javascript" src="js/ace-min/ace.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/ace-min/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/ace-min/mode-glsl.js" type="text/javascript" charset="utf-8"></script>
+
 		<!-- Main scripts -->
-		<script type="text/javascript" src="main.js"></script>
-		<script type="text/javascript" src="render.js"></script>
 		<script>
 				var editor = ace.edit("Editor");
 				editor.setTheme("ace/theme/monokai");
 				var GLSLMode = ace.require("ace/mode/glsl").Mode;
 				editor.session.setMode(new GLSLMode());
-
-				function compile () {
-					
-				}
-
-
 		</script>
+		<script type="text/javascript" src="render.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+
 
 	</body>
 </html>

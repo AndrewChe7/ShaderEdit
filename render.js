@@ -1,15 +1,20 @@
 var camera, scene, renderer;
 var geometry, material, mesh;
+var shader = "void main() {gl_FragColor = vec4(1.0,1.0,1.0,1.0);}";
+var uniforms = {};
+var geometry = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
+var isAnimated = true;
 
 
-function init(shader) {
+function init() {
 
 	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+	uniforms.resolution = {type:'v2',value:new THREE.Vector2(window.innerWidth/2,window.innerHeight/2)};
 	camera.position.z = 1;
 	scene = new THREE.Scene();
-	geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-	
+
 	material = new THREE.ShaderMaterial({
+		uniforms : uniforms,
 		fragmentShader : shader
 	});
 	
@@ -25,11 +30,14 @@ function init(shader) {
 }
 
 function animate() {
-
 	requestAnimationFrame( animate );
-
-	mesh.rotation.x += 0.005;
-	mesh.rotation.y += 0.003;
+ 	if (isAnimated) {
+		mesh.rotation.x += 0.005;
+		mesh.rotation.y += 0.003;
+	} else {
+		mesh.rotation.x = 0;
+		mesh.rotation.y = 0;
+	}
 
 	renderer.render( scene, camera );
 
@@ -41,5 +49,29 @@ $(document).ready(function () {
 });
 
 $( window ).resize(function() {
+	init();
+});
+
+$("#compileButton").click(function () {
+	var editorCode = editor.getValue();
+	shader = editorCode;
+	init ();
+});
+
+$("#boxButton").click(function () {
+	geometry = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
+	isAnimated = true;
+	init();
+});
+
+$("#planeButton").click(function () {
+	geometry = new THREE.PlaneGeometry( 2, 2, 2 );
+	isAnimated = false;
+	init();
+});
+
+$("#sphereButton").click(function () {
+	geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
+	isAnimated = false;
 	init();
 });
