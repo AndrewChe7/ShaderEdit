@@ -1,22 +1,66 @@
-var gui = require("nw.gui");
+var gui = require('nw.gui');
+var fs = require('fs');
 var win = gui.Window.get();
 
 
 
+function fileSaveLoad (isSaving, filePath) {
+	if (isSaving) {
+		fs.writeFile(filePath+'.frag', fragEditor.getValue(), function (err) {
+			if (err) {
+					alert(err);
+					return;
+			}
+		});
+		fs.writeFile(filePath+'.vert', vertexEditor.getValue(), function (err) {
+			if (err) {
+					alert(err);
+					return;
+			}
+		});
+	} else {
+
+		fs.readFile(filePath, function read (err, data) {
+  		if (err) alert(err);
+  		var content = "" + data;
+  		if (filePath.split('.').pop() == "frag") {
+				fragEditor.setValue (content, 1);
+			} else {
+				vertexEditor.setValue (content, 1);
+			}
+		});
+
+	}
+}
+
+function chooseFile(name) {
+	var chooser = $(name);
+	if (name == "#fileSaveDialog") {
+		isSaving = true;
+	} else {
+		isSaving = false;
+	}
+	chooser.unbind('change');
+
+	chooser.change(function(evt) {
+		fileSaveLoad (isSaving, $(this).val());
+	});
+
+	chooser.trigger('click');
+}
 
 
 function file_new () {
-	vertexEditor.setValue("", 1);
-	fragEditor.setValue("", 1);
+	vertexEditor.setValue('', 1);
+	fragEditor.setValue('', 1);
 }
 
-//TODO : save and load dialogs
 function file_save () {
-
-
+	chooseFile('#fileSaveDialog');
 }
 
 function file_open () {
+	chooseFile('#fileOpenDialog');
 
 }
 

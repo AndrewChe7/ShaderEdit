@@ -1,13 +1,13 @@
 var camera, scene, renderer;
 var geometry, material, mesh;
-var vertexShader = $("#defaultVertex").text();
-var fragShader = $("#defaultFragmental").text();
+var vertexShader = $('#defaultVertex').text();
+var fragShader = $('#defaultFragmental').text();
 var clock;
 
 
 uniforms = {
-	time: { type: "f", value: 1.0 },
-	resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth/2, window.innerHeight/2) },
+	time: { type: 'f', value: 1.0 },
+	resolution: { type: 'v2', value: new THREE.Vector2( window.innerWidth/2, window.innerHeight/2) },
 	texture: { value: new THREE.TextureLoader().load( 'textures/disturb.jpg' ) }
 };
 
@@ -34,11 +34,11 @@ function init() {
 	scene.add( mesh );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( window.innerWidth/2, window.innerHeight/2);
-	if ($("#WebGL-output").children().length) {
-		$("#WebGL-output").empty();
+	if ($('#WebGL-output').children().length) {
+		$('#WebGL-output').empty();
 	}
 
-	$("#WebGL-output").append( renderer.domElement );
+	$('#WebGL-output').append( renderer.domElement );
 }
 
 function animate() {
@@ -62,8 +62,8 @@ function animate() {
 
 $(document).ready(function () {
 
-	vertexEditor.setValue($("#defaultVertex").text(), 1);
-	fragEditor.setValue($("#defaultFragmental").text(), 1);
+	vertexEditor.setValue($('#defaultVertex').text(), 1);
+	fragEditor.setValue($('#defaultFragmental').text(), 1);
 
 	init();
 	animate();
@@ -73,7 +73,7 @@ $( window ).resize(function() {
 	init();
 });
 
-$("#compileButton").click(function () {
+$('#compileButton').click(function () {
 	var editorCode = fragEditor.getValue();
 	fragShader = editorCode;
 
@@ -103,6 +103,6 @@ function sphereButtonClick () {
 }
 
 /*
-$("#boxButton").click(boxButtonClick);
-$("#planeButton").click(planeButtonClick);
-$("#sphereButton").click(sphereButtonClick);*/
+$('#boxButton').click(boxButtonClick);
+$('#planeButton').click(planeButtonClick);
+$('#sphereButton').click(sphereButtonClick);*/
