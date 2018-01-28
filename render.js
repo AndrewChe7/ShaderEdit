@@ -1,12 +1,18 @@
 var camera, scene, renderer;
 var geometry, material, mesh;
-var vertexShader = "uniform float time; uniform vec2 resolution;void main()	{gl_Position = vec4( position, 1.0 );}"
-var fragShader = "uniform float time;uniform vec2 resolution;void main()	{float x = mod(time + gl_FragCoord.x, 20.) < 10. ? 1. : 0.;float y = mod(time + gl_FragCoord.y, 20.) < 10. ? 1. : 0.;gl_FragColor = vec4(vec3(min(x, y)), 1.);}";
+var vertexShader = $("#defaultVertex").text();
+var fragShader = $("#defaultFragmental").text();
+var clock;
+
 
 uniforms = {
 	time: { type: "f", value: 1.0 },
-	resolution: { type: "v2", value: new THREE.Vector2() }
+	resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth/2, window.innerHeight/2) },
+	texture: { value: new THREE.TextureLoader().load( 'textures/disturb.jpg' ) }
 };
+
+
+
 var geometry = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
 var isAnimated = true;
 
@@ -17,7 +23,7 @@ function init() {
 
 	camera.position.z = 1;
 	scene = new THREE.Scene();
-
+	clock = new THREE.Clock();
 	material = new THREE.ShaderMaterial({
 		uniforms : uniforms,
 		vertexShader : vertexShader,
@@ -37,6 +43,11 @@ function init() {
 
 function animate() {
 	requestAnimationFrame( animate );
+
+	var delta = clock.getDelta ();
+	
+	uniforms.time.value += delta * 5;
+	
 	if (isAnimated) {
 		mesh.rotation.x += 0.005;
 		mesh.rotation.y += 0.003;
@@ -51,8 +62,8 @@ function animate() {
 
 $(document).ready(function () {
 
-	vertexEditor.setValue("uniform float time;\nuniform vec2 resolution;\nvoid main()	{\n\tgl_Position = vec4( position, 1.0 );\n}", 1);
-	fragEditor.setValue("uniform float time;\nuniform vec2 resolution;\nvoid main()	{\n\tfloat x = mod(time + gl_FragCoord.x, 20.) < 10. ? 1. : 0.;\n\tfloat y = mod(time + gl_FragCoord.y, 20.) < 10. ? 1. : 0.;\n\tgl_FragColor = vec4(vec3(min(x, y)), 1.);\n}", 1);
+	vertexEditor.setValue($("#defaultVertex").text(), 1);
+	fragEditor.setValue($("#defaultFragmental").text(), 1);
 
 	init();
 	animate();

@@ -7,7 +7,7 @@
 	"window": {
 		"title": "ShaderEdit",
 		"icon": "icon.png",
-		"toolbar": true,
+		"toolbar": false,
 		"frame": true,
 		"width": 900,
 		"height": 600,
