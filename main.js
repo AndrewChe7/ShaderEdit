@@ -31,6 +31,7 @@ function file_exit () {
 var menu = new gui.Menu({ 'type': 'menubar' });
 
 var file = new gui.MenuItem({ label: 'File' });
+var view = new gui.MenuItem({ label: 'View' });
 
 var fileSubmenu = new gui.Menu();
 
@@ -55,11 +56,31 @@ fileSubmenu.append (new gui.MenuItem({
 	click : file_exit
 }));
 
-file.submenu = fileSubmenu;
+var viewSubmenu = new gui.Menu();
 
+viewSubmenu.append (new gui.MenuItem({ 
+	label : 'Box',
+	click : boxButtonClick
+}));
+
+viewSubmenu.append (new gui.MenuItem({ 
+	label : 'Plane',
+	click : planeButtonClick
+}));
+
+viewSubmenu.append (new gui.MenuItem({ 
+	label : 'Sphere',
+	click : sphereButtonClick
+}));
+
+
+
+
+file.submenu = fileSubmenu;
+view.submenu = viewSubmenu;
 
 menu.append (file);
-
+menu.append (view);
 
 win.menu = menu;
 

@@ -82,20 +82,27 @@ $("#compileButton").click(function () {
 	init ();
 });
 
-$("#boxButton").click(function () {
+
+
+function boxButtonClick () {
 	geometry = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
 	isAnimated = true;
 	init();
-});
+}
 
-$("#planeButton").click(function () {
+function planeButtonClick () {
 	geometry = new THREE.PlaneGeometry( 2, 2, 2 );
 	isAnimated = false;
 	init();
-});
+}
 
-$("#sphereButton").click(function () {
+function sphereButtonClick () {
 	geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
 	isAnimated = false;
 	init();
-});
+}
+
+/*
+$("#boxButton").click(boxButtonClick);
+$("#planeButton").click(planeButtonClick);
+$("#sphereButton").click(sphereButtonClick);*/
